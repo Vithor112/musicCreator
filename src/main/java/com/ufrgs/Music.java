@@ -14,6 +14,8 @@ public class Music {
     Music(List<Pattern> patterns){}
     // Começa a tocar a música;
     void Start(){}
+    // Salva a musica no arquivo que corresponde ao caminho dado
+    public void saveMusic(String pathTo){}
     //  Pausa a música;
     void Pause(){}
     // Diz qual tempo estamos na música;
