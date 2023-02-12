@@ -1,6 +1,7 @@
 package com.ufrgs;
 
 import javax.swing.*;
+import java.awt.*;
 
 // Ao criada deve inicializar a biblioteca de interface gráfica e criar e exibir a tela do programa, também deve responder a inputs do usuário;
 public class MainWindow {
@@ -11,6 +12,19 @@ public class MainWindow {
     JTextArea inputText;
     // TODO WidgetPlayer widgetPlayer;
     JPanel instructionTable;
+    private JPanel mainPanel;
+    private JButton generateMusicButton;
+    private JButton saveMusicButton;
+
+    public MainWindow(){
+            JFrame frame = new JFrame();
+            Toolkit tk=Toolkit.getDefaultToolkit();
+            Dimension screenSize = tk.getScreenSize();
+            frame.setSize(screenSize.width,screenSize.height);
+            frame.add(mainPanel);
+            frame.setTitle("Song Parser");
+            frame.setVisible(true);
+    }
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
     void OnGenerateMusicBtn(){}
     // Callback  que ocorre quando o usuário clica no botão para salvar a música, deve chamar o método save da classe Music;
