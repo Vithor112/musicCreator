@@ -2,6 +2,7 @@ package com.ufrgs;
 
 import javax.swing.*;
 
+// Ao criada deve inicializar a biblioteca de interface gráfica e criar e exibir a tela do programa, também deve responder a inputs do usuário;
 public class MainWindow {
     String InputText;
     JButton GenerateMusicBtn;
