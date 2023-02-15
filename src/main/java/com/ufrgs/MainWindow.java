@@ -1,5 +1,7 @@
 package com.ufrgs;
 
+import com.ufrgs.GUI.MouseAdapterIconLabel;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
@@ -18,38 +20,18 @@ public class MainWindow {
     JPanel instructionTable;
     private JPanel mainPanel;
     private JButton generateMusicButton;
-    private JButton saveMusicButton;
     private JLabel labelInputFIle;
+    private JLabel labelSaveMusic;
 
     public MainWindow(){
-        ImageIcon x = new ImageIcon("/home/vithor/Desktop/musicCreator/icons/document.png");
-        Image img = x.getImage();
-        Image newImg = img.getScaledInstance(50,50, Image.SCALE_SMOOTH);
-        Image hoveredImg = img.getScaledInstance(60,60, Image.SCALE_SMOOTH);
-        labelInputFIle.setIcon(new ImageIcon(newImg));
-        labelInputFIle.addMouseListener(new MouseAdapter() {
-                                            @Override
-                                            public void mouseClicked(MouseEvent mouseEvent) {
-
-                                            }
-
-                                            @Override
-                                            public void mouseEntered(MouseEvent mouseEvent) {
-                                                labelInputFIle.setIcon(new ImageIcon(hoveredImg));
-                                            }
-
-                                            @Override
-                                            public void mouseExited(MouseEvent mouseEvent) {
-                                                labelInputFIle.setIcon(new ImageIcon(newImg));
-                                            }
-                                        }
-        );
         JFrame frame = new JFrame();
         Toolkit tk=Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
         frame.setSize(screenSize.width,screenSize.height);
         frame.add(mainPanel);
         frame.setTitle("Song Parser");
+        labelInputFIle.addMouseListener(new MouseAdapterIconLabel(labelInputFIle, "./icons/document.png", 50, 5, () -> System.out.println("Define me")));
+        labelSaveMusic.addMouseListener(new MouseAdapterIconLabel(labelSaveMusic, "./icons/save.png", 50, 5, () -> System.out.println("Define me")));
         frame.setVisible(true);
     }
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
@@ -71,5 +53,4 @@ public class MainWindow {
     void setWidgetPlayerTime(){}
     //  Lê arquivo contendo texto da música
     void readFromTxt(){}
-
 }
