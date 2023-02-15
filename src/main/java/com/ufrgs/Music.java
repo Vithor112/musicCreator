@@ -11,13 +11,13 @@ public class Music {
     List<Pattern> patterns;
     Player player;
     //  cria a música com os padrões dados;
-    Music(List<Pattern> patterns){}
+    public Music(List<Pattern> patterns){}
     // Começa a tocar a música;
     void Start(){}
     // Salva a musica no arquivo que corresponde ao caminho dado
     public void saveMusic(String pathTo){}
     //  Pausa a música;
-    void Pause(){}
+    public void Pause(){}
     // Diz qual tempo estamos na música;
-    Timestamp getTime(){return null;}
+    public Timestamp getTime(){return null;}
 }
