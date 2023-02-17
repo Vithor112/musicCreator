@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
+// Classe criada para tornar a classe JLabel do Swing, em botões com um efeito de hover. A biblioteca Swing não suporta botões feito apenas por imagens.
 public class MouseAdapterIconLabel extends MouseAdapter {
     Image originalImage;
     Image hoveredImg;
