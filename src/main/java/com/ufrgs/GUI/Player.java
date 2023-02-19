@@ -11,8 +11,12 @@ public class Player extends  JPanel {
     private JLabel timestampLabel;
     private JProgressBar progressBar;
 
-    public Player();
+    public Player(){
 
-    public void setMusic(Music music);
+    }
+
+    public void setMusic(Music music){
+
+    }
 
 }
