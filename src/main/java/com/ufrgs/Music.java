@@ -14,8 +14,10 @@ public class Music {
     public Music(List<Pattern> patterns){}
     // Começa a tocar a música;
     void Start(){}
-    // Salva a musica no arquivo que corresponde ao caminho dado
-    public void saveMusic(String pathTo){}
+    // Salva o output da musica no arquivo que corresponde ao caminho dado
+    public void saveMusicOutput(String pathTo){}
+    // Salva o arquivo MIDI que corresponde ao caminho dado
+    public void saveMusicMIDI(String pathTo){}
     //  Pausa a música;
     public void Pause(){}
     // Diz qual tempo estamos na música;
