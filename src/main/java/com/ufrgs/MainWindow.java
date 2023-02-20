@@ -47,7 +47,8 @@ public class MainWindow {
         fc.setDialogTitle("Select folder to save music");
         int result = fc.showDialog(null, "Select");
         if (result == JFileChooser.APPROVE_OPTION)
-            music.saveMusic(fc.getSelectedFile().getAbsolutePath());
+            music.saveMusicOutput(fc.getSelectedFile().getAbsolutePath());
+            music.saveMusicMIDI(fc.getSelectedFile().getAbsolutePath());
     }
 
     // Callback que ocorre quando o usuário clica no botão para pausar/start a música, deve tocar ou pausar a música dependendo do estado anterior, chamando o método correspondente da classe Music;

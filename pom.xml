@@ -14,7 +14,25 @@
             <artifactId>javafx-swing</artifactId>
             <version>19</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/jfugue/jfugue -->
+        <dependency>
+            <groupId>jfugue</groupId>
+            <artifactId>jfugue</artifactId>
+            <version>5.0.9</version>
+        </dependency>
+
     </dependencies>
+    
+    <repositories>
+            <repository>
+                <id>MavenCentral</id>
+                <url>https://repo.maven.apache.org/maven2/</url>
+            </repository>
+            <repository>
+                <id>MavenSing</id>
+                <url>https://maven.sing-group.org/repository/maven//</url>
+            </repository>
+        </repositories>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
