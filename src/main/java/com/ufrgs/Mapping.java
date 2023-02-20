@@ -1,19 +1,29 @@
 package com.ufrgs;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
+import java.io.*;
+
+
 
 public class Mapping {
+
+    private static final String MAP_FILE = "./src/main/mapping.txt";
     private final HashMap<String, String> mapCharsToJFugueCommand = new HashMap<>();
 
-    public Mapping() {
+    public Mapping() throws Exception {
         initializeMap();
     }
 
     // Inicializa o map com valores hardcoded
-    private void initializeMap(){
+    private void initializeMap() throws Exception {
         // TODO
+
+        readFromFile();
+        //System.out.println(mapCharsToJFugueCommand);
+        
     }
 
     // Retorna uma lista com as Strings que mapeaiam pra um comando no map
@@ -33,4 +43,39 @@ public class Mapping {
         }
         return "";
     }
+
+    public void readFromFile() throws Exception {
+        File file = new File(MAP_FILE);
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        String st;
+        String[] map, sMap;
+        while ((st = br.readLine()) != null) {
+            map = st.split("=");
+
+            //se a parte a esquerda de "=", que representa o caracter, estiver dividida com "-", significa
+            //que todos os caracteres entre (e incluso) aqueles serão mapeados com a função a direita de "="
+            if (map[0].contains("-")){
+
+                sMap = map[0].split("-");
+
+                int numChars = (int) sMap[1].charAt(0)- (int) sMap[0].charAt(0) +1;
+                int ini = (int) sMap[0].charAt(0);
+                char charat;
+                for (int x=ini;x<numChars+ini;x++){
+                    mapCharsToJFugueCommand.put(String.valueOf((char) x), map[1]);
+                }
+            }else{
+                mapCharsToJFugueCommand.put(map[0], map[1]);
+            }
+        }
+
+    }
+
+
 }
