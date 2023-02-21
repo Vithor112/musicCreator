@@ -16,6 +16,7 @@ public class MainWindow {
     JButton PauseMusicBtn;
     Music music;
     MusicFactory musicFactory;
+
     JTextArea inputText;
     // TODO WidgetPlayer widgetPlayer;
     JPanel instructionTable;
@@ -36,8 +37,10 @@ public class MainWindow {
         frame.setVisible(true);
 
         //TESTES ANA
-        //readFromTxt();
-        // = MusicFactory.createMusic(";Ca DEFGAB?");
+        readFromTxt();
+        //music = MusicFactory.createMusic(";DDD?DDD????I?DDDDDCa*");
+        //music.start();
+        //music.saveMusicMIDI("nao tá usando o path ainda");
     }
 
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
