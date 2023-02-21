@@ -15,6 +15,7 @@ public class MainWindow {
     JButton SaveMusicBtn;
     JButton PauseMusicBtn;
     Music music;
+    MusicFactory musicFactory;
     JTextArea inputText;
     // TODO WidgetPlayer widgetPlayer;
     JPanel instructionTable;
@@ -33,6 +34,10 @@ public class MainWindow {
         labelInputFIle.addMouseListener(new MouseAdapterIconLabel(labelInputFIle, "./icons/document.png", 50, 5, () -> System.out.println("Define me")));
         labelSaveMusic.addMouseListener(new MouseAdapterIconLabel(labelSaveMusic, "./icons/save.png", 50, 5, () -> System.out.println("Define me")));
         frame.setVisible(true);
+
+        //TESTES ANA
+        //readFromTxt();
+        // = MusicFactory.createMusic(";Ca DEFGAB?");
     }
 
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
@@ -61,6 +66,12 @@ public class MainWindow {
 
     //  Lê arquivo contendo texto da música
     void readFromTxt() {
+        try {
+            Mapping map = new Mapping();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     {

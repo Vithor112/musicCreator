@@ -6,24 +6,20 @@ import java.util.HashMap;
 import java.util.Set;
 import java.io.*;
 
-
-
 public class Mapping {
 
     private static final String MAP_FILE = "./src/main/mapping.txt";
     private final HashMap<String, String> mapCharsToJFugueCommand = new HashMap<>();
 
     public Mapping() throws Exception {
-        initializeMap();
+        //initializeMap();
+        initializeFromFile();
+        //System.out.println(mapCharsToJFugueCommand);
     }
 
     // Inicializa o map com valores hardcoded
-    private void initializeMap() throws Exception {
+    private void initializeMap() {
         // TODO
-
-        readFromFile();
-        //System.out.println(mapCharsToJFugueCommand);
-        
     }
 
     // Retorna uma lista com as Strings que mapeaiam pra um comando no map
@@ -44,7 +40,7 @@ public class Mapping {
         return "";
     }
 
-    public void readFromFile() throws Exception {
+    public void initializeFromFile() throws Exception {
         File file = new File(MAP_FILE);
         BufferedReader br;
         try {
@@ -63,12 +59,12 @@ public class Mapping {
             if (map[0].contains("-")){
 
                 sMap = map[0].split("-");
-
                 int numChars = (int) sMap[1].charAt(0)- (int) sMap[0].charAt(0) +1;
                 int ini = (int) sMap[0].charAt(0);
                 char charat;
+
                 for (int x=ini;x<numChars+ini;x++){
-                    mapCharsToJFugueCommand.put(String.valueOf((char) x), map[1]);
+                    mapCharsToJFugueCommand.put(String.valueOf((char) x), map[1]+String.valueOf((char) x));
                 }
             }else{
                 mapCharsToJFugueCommand.put(map[0], map[1]);
@@ -76,6 +72,5 @@ public class Mapping {
         }
 
     }
-
 
 }

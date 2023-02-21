@@ -1,14 +1,14 @@
-A-G=add(CHAR_READ)
- =addToEachNoteToken(a+2VOL)
-!=setInstrument("AGOGO")
-O=setInstrument("HARPSICHORD")
-o=setInstrument("HARPSICHORD")
-I=setInstrument("HARPSICHORD")
-i=setInstrument("HARPSICHORD")
-U=setInstrument("HARPSICHORD")
-u=setInstrument("HARPSICHORD")
-?=addToEachNoteToken(OCTAVE+1)
-0-9=setInstrument(getInstrumentsUsedInPattern(patternProducer))
-=setInstrument("TUBULAR_BELLS")
-;=setInstrument("PAN_FLUTE")
-,=setInstrument("CHURCH_ORGAN")
+A-G=N:
+ =V:2
+!=I:113
+O=I:6
+o=I:6
+I=I:6
+i=I:6
+U=I:6
+u=I:6
+?=O:1
+0-9=IM:
+=I:14
+;=I:75
+,=I:19
