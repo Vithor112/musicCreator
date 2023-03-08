@@ -20,10 +20,7 @@ public class Music {
         //System.out.println(pattern.getPattern());
         player = new Player();
     }
-    // Começa a tocar a música;
-    void start(){
-        player.play(pattern);
-    }
+
     // Salva o output da musica no arquivo que corresponde ao caminho dado
     public void saveMusicOutput(String pathTo){}
     // Salva o arquivo MIDI que corresponde ao caminho dado
@@ -35,8 +32,18 @@ public class Music {
             ex.printStackTrace();
         }
     }
-    //  Pausa a música;
-    public void Pause(){}
+    //  Pausa a música ou a retoma;
+    public void Pause(){
+        if (player.getManagedPlayer().isStarted()) {
+            if (player.getManagedPlayer().isPaused()) {
+                player.getManagedPlayer().resume();
+            } else {
+                player.getManagedPlayer().pause();
+            }
+        } else {
+            player.play(pattern);
+        }
+    }
     // Diz qual tempo estamos na música;
     public Timestamp getTime(){return null;}
 }
