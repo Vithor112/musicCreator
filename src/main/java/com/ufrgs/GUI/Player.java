@@ -15,7 +15,7 @@ public class Player {
     private Music music;
 
     public Player() {
-        startLabel.addMouseListener(new MouseAdapterIconLabel(startLabel, "./icons/play.png", 30, 5, () -> System.out.println("Define me")));
+        startLabel.addMouseListener(new MouseAdapterIconLabelUpdate(startLabel, "./icons/play.png", "./icons/pause.png", 30, 5, () -> System.out.println("Define me")));
         timeLabel.setText(" 0:00/3:53");
         mainPanel.setMaximumSize(new Dimension(900, 70));
         mainPanel.setSize(900, 70);

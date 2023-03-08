@@ -9,14 +9,14 @@ import java.io.File;
 import java.io.IOException;
 
 // Classe criada para tornar a classe JLabel do Swing, em botões com um efeito de hover. A biblioteca Swing não suporta botões feito apenas por imagens.
-public class MouseAdapterIconLabel extends MouseAdapter {
+public class MouseAdapterIconLabelIncrease extends MouseAdapter {
     Image originalImage;
     Image hoveredImg;
     Runnable actionCallback;
     JLabel label;
-    public MouseAdapterIconLabel(JLabel label, String iconFile, int normalSize, int incrementFactor, Runnable actionCallback){
+    public MouseAdapterIconLabelIncrease(JLabel label, String iconFile, int normalSize, int incrementFactor, Runnable actionCallback){
         this.label = label;
-        label.setMinimumSize(new Dimension(normalSize + 5, normalSize + 5));
+        label.setMinimumSize(new Dimension(normalSize + incrementFactor, normalSize + incrementFactor));
         Image img =  null;
         try {
             img = ImageIO.read(new File(iconFile));
@@ -26,9 +26,8 @@ public class MouseAdapterIconLabel extends MouseAdapter {
         }
         this.originalImage = img.getScaledInstance(normalSize,normalSize, Image.SCALE_SMOOTH);
         label.setIcon(new ImageIcon(originalImage));
-        this.hoveredImg = originalImage.getScaledInstance(normalSize + 5, normalSize + 5, Image.SCALE_SMOOTH);
+        this.hoveredImg = originalImage.getScaledInstance(normalSize + incrementFactor, normalSize + incrementFactor, Image.SCALE_SMOOTH);
         this.actionCallback = actionCallback;
-
     }
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {

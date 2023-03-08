@@ -1,6 +1,6 @@
 package com.ufrgs;
 
-import com.ufrgs.GUI.MouseAdapterIconLabel;
+import com.ufrgs.GUI.MouseAdapterIconLabelIncrease;
 import com.ufrgs.GUI.Player;
 
 import javax.swing.*;
@@ -39,8 +39,8 @@ public class MainWindow {
         patternsTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         inputText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         frame.setTitle("Song Parser");
-        labelInputFIle.addMouseListener(new MouseAdapterIconLabel(labelInputFIle, "./icons/document.png", 50, 5, () -> System.out.println("Define me")));
-        labelSaveMusic.addMouseListener(new MouseAdapterIconLabel(labelSaveMusic, "./icons/save.png", 50, 5, () -> System.out.println("Define me")));
+        labelInputFIle.addMouseListener(new MouseAdapterIconLabelIncrease(labelInputFIle, "./icons/document.png", 50, 5, () -> System.out.println("Define me")));
+        labelSaveMusic.addMouseListener(new MouseAdapterIconLabelIncrease(labelSaveMusic, "./icons/save.png", 50, 5, () -> System.out.println("Define me")));
         frame.setVisible(true);
 
 
