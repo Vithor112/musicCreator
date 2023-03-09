@@ -9,7 +9,9 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.io.*;
 import java.util.Locale;
+import java.util.Scanner;
 
 // Ao criada deve inicializar a biblioteca de interface gráfica e criar e exibir a tela do programa, também deve responder a inputs do usuário;
 public class MainWindow {
@@ -31,6 +33,7 @@ public class MainWindow {
     public MainWindow() {
         JFrame frame = new JFrame();
         $$$setupUI$$$();
+        initializeMapping();
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension screenSize = tk.getScreenSize();
         frame.setSize(screenSize.width, screenSize.height);
@@ -38,17 +41,12 @@ public class MainWindow {
         charsTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         patternsTable.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         inputText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
         frame.setTitle("Song Parser");
-        labelInputFIle.addMouseListener(new MouseAdapterIconLabelIncrease(labelInputFIle, "./icons/document.png", 50, 5, () -> System.out.println("Define me")));
-        labelSaveMusic.addMouseListener(new MouseAdapterIconLabelIncrease(labelSaveMusic, "./icons/save.png", 50, 5, () -> System.out.println("Define me")));
+        labelInputFIle.addMouseListener(new MouseAdapterIconLabelIncrease(labelInputFIle, "./icons/document.png", 50, 5, this::readFromTxt));
+        labelSaveMusic.addMouseListener(new MouseAdapterIconLabelIncrease(labelSaveMusic, "./icons/save.png", 50, 5, this::saveMusic));
         frame.setVisible(true);
-
-
-        //TESTES ANA
-        readFromTxt();
-        //music = MusicFactory.createMusic(";DDD?DDD????I?DDDDDCa*");
-        //music.start();
-        //music.saveMusicMIDI("nao tá usando o path ainda");
+        System.out.println(inputText.getSize());
     }
 
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
@@ -57,14 +55,17 @@ public class MainWindow {
     }
 
     // Callback  que ocorre quando o usuário clica no botão para salvar a música, deve chamar o método save da classe Music;
-    void OnSaveMusicBtn() {
+    void saveMusic() {
+        if (music == null) throw new RuntimeException("Music was not generated"); // TODO
         JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fc.setDialogTitle("Select folder to save music");
         int result = fc.showDialog(null, "Select");
-        if (result == JFileChooser.APPROVE_OPTION)
-            music.saveMusicOutput(fc.getSelectedFile().getAbsolutePath());
-        music.saveMusicMIDI(fc.getSelectedFile().getAbsolutePath());
+        if (result == JFileChooser.APPROVE_OPTION) {
+            music.saveMusicMIDI(fc.getSelectedFile().getAbsolutePath());
+            // music.saveMusicOutput(fc.getSelectedFile().getAbsolutePath()); // TODO
+        }
+
     }
 
     // Callback que ocorre quando o usuário clica no botão para pausar/start a música, deve tocar ou pausar a música dependendo do estado anterior, chamando o método correspondente da classe Music;
@@ -75,12 +76,43 @@ public class MainWindow {
     void setWidgetPlayerTime() {
     }
 
-    //  Lê arquivo contendo texto da música
-    void readFromTxt() {
+    void initializeMapping() {
         try {
             Mapping map = new Mapping();
-        } catch (Exception e) {
+        } catch (IOException e) {
+            // TODO
             throw new RuntimeException(e);
+        }
+    }
+
+    //  Lê arquivo contendo texto da música
+    void readFromTxt() {
+        JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fc.setDialogTitle("Select file to read text");
+        int result = fc.showDialog(null, "Select");
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            try {
+                Scanner scanner = new Scanner(file);
+                inputText.setText("");
+                while (scanner.hasNextLine()) {
+                    String text = scanner.nextLine();
+                    if (text.length() > inputText.getWidth()) {
+                        int start = 0, end = inputText.getWidth() - 1;
+                        while (end < text.length()) {
+                            inputText.append(text.substring(start, end) + '\n');
+                            start = end;
+                            end += inputText.getWidth();
+                        }
+                        inputText.append(text.substring(start));
+                    } else {
+                        inputText.append(text + '\n');
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }

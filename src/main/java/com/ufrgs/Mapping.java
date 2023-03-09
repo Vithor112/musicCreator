@@ -11,15 +11,8 @@ public class Mapping {
     private static final String MAP_FILE = "./src/main/mapping.txt";
     private final HashMap<String, String> mapCharsToJFugueCommand = new HashMap<>();
 
-    public Mapping() throws Exception {
-        //initializeMap();
+    public Mapping() throws IOException {
         initializeFromFile();
-        //System.out.println(mapCharsToJFugueCommand);
-    }
-
-    // Inicializa o map com valores hardcoded
-    private void initializeMap() {
-        // TODO
     }
 
     // Retorna uma lista com as Strings que mapeaiam pra um comando no map
@@ -40,7 +33,7 @@ public class Mapping {
         return "";
     }
 
-    public void initializeFromFile() throws Exception {
+    public void initializeFromFile() throws IOException {
         File file = new File(MAP_FILE);
         BufferedReader br;
         try {
