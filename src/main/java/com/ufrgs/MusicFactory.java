@@ -47,7 +47,7 @@ public class MusicFactory {
                 }
             } //se for caracter definido
             else{//se for qualquer caracter não definido ou a-g
-                // FIXXXXXXXXX VER COM O PIMENTA o caso Ca*
+                // TODO FIXXXXXXXXX VER COM O PIMENTA o caso Ca*
                 if((int)lastRead>=65 && (int)lastRead<=71){//se ultimo caracter foi nota, coloca ele de novo
                     command = map.getCommand(String.valueOf(lastRead));
                     sel = command.split(":");
@@ -62,13 +62,11 @@ public class MusicFactory {
 
     // Gera a Musica correspondente através do texto passado;
     public static Music createMusic(String text, Mapping map){
-        pattern = createPattern(text, map);
-        Music music = new Music(pattern);
-        return music;
+        return new Music(createPattern(text, map));
     }
 
     public static void setVolume(int volume) {
-        if(volume>127){//FIXXXXX VER COM O PIMENTA
+        if(volume>127){ // TODO FIXXXXX VER COM O PIMENTA
             volume = 40;
         }
 
@@ -76,7 +74,7 @@ public class MusicFactory {
     }
 
     public static void setOctave(int octave) {
-        if (octave>10 || octave<1){ //FIXXXXX VER COM O PIMENTA
+        if (octave>10 || octave<1){ // TODO FIXXXXX VER COM O PIMENTA
             octave = 5;
         }
         MusicFactory.octave = octave;
