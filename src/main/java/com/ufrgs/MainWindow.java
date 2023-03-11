@@ -21,6 +21,8 @@ public class MainWindow {
 
     JTextArea inputText;
     private Player player;
+
+    private Mapping map;
     private JPanel mainPanel;
     private JButton generateMusicButton;
     private JLabel labelInputFIle;
@@ -50,7 +52,7 @@ public class MainWindow {
 
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
     void OnGenerateMusicBtn() {
-        music = MusicFactory.createMusic(inputText.getText());
+        music = MusicFactory.createMusic(inputText.getText(), map);
     }
 
     // Callback  que ocorre quando o usuário clica no botão para salvar a música, deve chamar o método save da classe Music;
@@ -77,7 +79,7 @@ public class MainWindow {
 
     void initializeMapping() {
         try {
-            Mapping map = new Mapping();
+            map = new Mapping();
         } catch (IOException e) {
             // TODO
             throw new RuntimeException(e);

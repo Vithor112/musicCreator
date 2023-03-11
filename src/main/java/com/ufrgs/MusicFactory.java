@@ -7,25 +7,15 @@ import java.util.List;
 
 // Classe que cuida do processo da geração da música através de um texto;
 public class MusicFactory {
-    private static  final Mapping map;
-    private static Pattern pattern;
     private static int instrument=0; //MIDI instrument https://fmslogo.sourceforge.io/manual/midi-instrument.html
     private static  int volume =40; //volume from 0 to 127
     private static int octave = 5; //default octave
-
-    static {
-        try {
-            map = new Mapping();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public MusicFactory(){
     }
 
     // Gera lista de padrões Musicais correspondente ao texto passado
-    public static Pattern createPattern(String text){
+    public static Pattern createPattern(String text, Mapping map){
         String command;
         char lastRead='a';
 
@@ -71,8 +61,8 @@ public class MusicFactory {
     }
 
     // Gera a Musica correspondente através do texto passado;
-    public static Music createMusic(String text){
-        pattern = createPattern(text);
+    public static Music createMusic(String text, Mapping map){
+        pattern = createPattern(text, map);
         Music music = new Music(pattern);
         return music;
     }
