@@ -62,7 +62,7 @@ public class MusicFactory {
 
     // Gera a Musica correspondente através do texto passado;
     public static Music createMusic(String text, Mapping map){
-        pattern = createPattern(text, map);
+        Pattern pattern = createPattern(text, map);
         Music music = new Music(pattern);
         return music;
     }
