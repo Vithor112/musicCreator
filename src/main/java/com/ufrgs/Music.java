@@ -39,7 +39,7 @@ public class Music {
     // Salva o arquivo MIDI que corresponde ao caminho dado
     public void saveMusicMIDI(String pathTo){
         try {
-            File file = new File("song.midi");
+            File file = new File(pathTo);
             MidiFileManager.savePatternToMidi(pattern, file );
         } catch (IOException ex) {
             ex.printStackTrace();
