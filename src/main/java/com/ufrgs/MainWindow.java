@@ -7,11 +7,13 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.io.*;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
+import java.util.List;
 
 // Ao criada deve inicializar a biblioteca de interface gráfica e criar e exibir a tela do programa, também deve responder a inputs do usuário;
 public class MainWindow {
@@ -80,10 +82,24 @@ public class MainWindow {
     void initializeMapping() {
         try {
             map = new Mapping();
+            setColumn(charsTable, "Symbols", map.getChars());
+            setColumn(patternsTable, "Patterns", map.getCommands());
         } catch (IOException e) {
             // TODO
             throw new RuntimeException(e);
         }
+    }
+
+    void setColumn(JTable table, String columnName, Collection<String> value) {
+        table.setShowGrid(false);
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int i, int i1) {
+                return false;
+            }
+        };
+        model.addColumn(columnName, value.toArray());
+        table.setModel(model);
     }
 
     //  Lê arquivo contendo texto da música
@@ -165,10 +181,6 @@ public class MainWindow {
         mainPanel.add(spacer10, new com.intellij.uiDesigner.core.GridConstraints(5, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(80, 80), null, new Dimension(80, 80), 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer11 = new com.intellij.uiDesigner.core.Spacer();
         mainPanel.add(spacer11, new com.intellij.uiDesigner.core.GridConstraints(5, 6, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(40, 40), null, new Dimension(40, 40), 0, false));
-        charsTable = new JTable();
-        mainPanel.add(charsTable, new com.intellij.uiDesigner.core.GridConstraints(3, 10, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(200, -1), new Dimension(200, 50), new Dimension(200, -1), 0, false));
-        patternsTable = new JTable();
-        mainPanel.add(patternsTable, new com.intellij.uiDesigner.core.GridConstraints(3, 11, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(200, -1), new Dimension(200, 50), new Dimension(200, -1), 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer12 = new com.intellij.uiDesigner.core.Spacer();
         mainPanel.add(spacer12, new com.intellij.uiDesigner.core.GridConstraints(3, 12, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, 1, new Dimension(30, 30), null, new Dimension(30, 30), 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
@@ -176,6 +188,14 @@ public class MainWindow {
         inputText = new JTextArea();
         inputText.setText("");
         scrollPane1.setViewportView(inputText);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        mainPanel.add(scrollPane2, new com.intellij.uiDesigner.core.GridConstraints(3, 10, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        charsTable = new JTable();
+        scrollPane2.setViewportView(charsTable);
+        final JScrollPane scrollPane3 = new JScrollPane();
+        mainPanel.add(scrollPane3, new com.intellij.uiDesigner.core.GridConstraints(3, 11, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        patternsTable = new JTable();
+        scrollPane3.setViewportView(patternsTable);
     }
 
     /**
