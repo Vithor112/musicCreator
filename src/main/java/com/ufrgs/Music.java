@@ -3,6 +3,8 @@ package com.ufrgs;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 import org.jfugue.midi.MidiFileManager;
+import org.staccato.StaccatoParser;
+import org.jfugue.tools.ComputeDurationForEachTrackTool;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,11 +16,22 @@ public class Music {
 
     Pattern pattern;
     Player player;
+    double durationSeconds;
+
     //  cria a música com os padrões dados;
     public Music(Pattern p){
         pattern = p;
-        //System.out.println(pattern.getPattern());
+        calcDuration();
         player = new Player();
+    }
+    //Calcula a duração da música a partir do pattern
+    public void calcDuration(){
+        StaccatoParser parser = new StaccatoParser();
+        ComputeDurationForEachTrackTool tool = new ComputeDurationForEachTrackTool();
+        parser.addParserListener(tool);
+        parser.parse(pattern);
+        double[] durationsOfEachVoice = tool.getDurations();
+        durationSeconds = durationsOfEachVoice[0];
     }
 
     // Salva o output da musica no arquivo que corresponde ao caminho dado
@@ -26,7 +39,7 @@ public class Music {
     // Salva o arquivo MIDI que corresponde ao caminho dado
     public void saveMusicMIDI(String pathTo){
         try {
-            File file = new File("teste.midi");
+            File file = new File("song.midi");
             MidiFileManager.savePatternToMidi(pattern, file );
         } catch (IOException ex) {
             ex.printStackTrace();

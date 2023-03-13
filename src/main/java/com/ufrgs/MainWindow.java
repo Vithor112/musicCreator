@@ -11,6 +11,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -50,6 +52,12 @@ public class MainWindow {
         labelInputFIle.addMouseListener(new MouseAdapterIconLabelIncrease(labelInputFIle, "./icons/document.png", 50, 5, this::readFromTxt));
         labelSaveMusic.addMouseListener(new MouseAdapterIconLabelIncrease(labelSaveMusic, "./icons/save.png", 50, 5, this::saveMusic));
         frame.setVisible(true);
+        generateMusicButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                OnGenerateMusicBtn();
+            }
+        });
     }
 
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
