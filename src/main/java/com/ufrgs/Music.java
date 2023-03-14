@@ -11,14 +11,10 @@ import javax.sound.midi.MidiUnavailableException;
 import java.io.File;
 import java.io.IOException;
 
-import java.security.Timestamp;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
 
 // É a música em si, seria a interface do programa com a biblioteca utilizada:
 public class Music {
@@ -26,7 +22,9 @@ public class Music {
     Pattern pattern;
     Player player;
 
-    boolean firstTime = true;
+    AtomicBoolean firstTime = new AtomicBoolean(true);
+
+    AtomicBoolean running = new AtomicBoolean(true);
 
     AtomicLong nanoSecondsPlayed = new AtomicLong(0L);
 
@@ -56,8 +54,8 @@ public class Music {
     }
     //  Pausa a música ou a retoma;
     public void Pause(){
-        if (firstTime) {
-            firstTime = false;
+        if (firstTime.get()) {
+            firstTime.set(false);
             executorService.submit(() -> {
                 try {
                     player.getManagedPlayer().start(player.getSequence(pattern));
@@ -67,7 +65,7 @@ public class Music {
                 long nanoStart = System.nanoTime();
                 boolean newStart = true;
 
-                while(!player.getManagedPlayer().isFinished()) {
+                while(!player.getManagedPlayer().isFinished() && running.get()) {
                     if (!pause.get()) {
                         player.getManagedPlayer().resume();
                         long nanoPlayed = System.nanoTime();
@@ -81,6 +79,7 @@ public class Music {
                         player.getManagedPlayer().pause();
                     }
                 }
+                firstTime.set(true);
             });
         } else {
             pause.set(!pause.get());
@@ -89,9 +88,13 @@ public class Music {
     // Diz qual tempo estamos na música;
     public Long getTime(){return nanoSecondsPlayed.get();}
 
+    public void stop(){
+        running.set(false);
+    }
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        executorService.shutdownNow();
+        running.set(false);
     }
 }

@@ -62,6 +62,7 @@ public class MainWindow {
 
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
     void OnGenerateMusicBtn() {
+        if (music != null) music.stop();
         music = MusicFactory.createMusic(inputText.getText(), map);
         player.setMusic(music);
     }
