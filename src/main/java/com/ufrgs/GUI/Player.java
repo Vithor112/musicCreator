@@ -15,10 +15,17 @@ public class Player {
     private Music music;
 
     public Player() {
-        startLabel.addMouseListener(new MouseAdapterIconLabelUpdate(startLabel, "./icons/play.png", "./icons/pause.png", 30, 5, () -> System.out.println("Define me")));
+        startLabel.addMouseListener(new MouseAdapterIconLabelUpdate(startLabel, "./icons/play.png", "./icons/pause.png", 30, this::playMusic));
         timeLabel.setText(" 0:00/3:53");
         mainPanel.setMaximumSize(new Dimension(900, 70));
         mainPanel.setSize(900, 70);
+    }
+
+    void playMusic() {
+        if (music != null) {
+            music.Pause();
+        }
+        // TODO throw warning
     }
 
     public JPanel getPlayerPanel() {

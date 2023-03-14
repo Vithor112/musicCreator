@@ -63,6 +63,7 @@ public class MainWindow {
     // Callback que ocorre quando o usuário clica no botão para gerar a música, deve pegar o texto atual e passa-lo para a musicFactory;
     void OnGenerateMusicBtn() {
         music = MusicFactory.createMusic(inputText.getText(), map);
+        player.setMusic(music);
     }
 
     // Callback  que ocorre quando o usuário clica no botão para salvar a música, deve chamar o método save da classe Music;
@@ -77,14 +78,6 @@ public class MainWindow {
             // music.saveMusicOutput(fc.getSelectedFile().getAbsolutePath()); // TODO
         }
 
-    }
-
-    // Callback que ocorre quando o usuário clica no botão para pausar/start a música, deve tocar ou pausar a música dependendo do estado anterior, chamando o método correspondente da classe Music;
-    void OnPauseBtn() {
-    }
-
-    // Seta o tempo da música na barra de progressão;
-    void setWidgetPlayerTime() {
     }
 
     void initializeMapping() {

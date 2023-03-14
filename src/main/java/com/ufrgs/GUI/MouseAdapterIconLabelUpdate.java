@@ -14,9 +14,9 @@ public class MouseAdapterIconLabelUpdate extends MouseAdapter {
     Runnable actionCallback;
     boolean next = false;
     JLabel label;
-    public MouseAdapterIconLabelUpdate(JLabel label, String iconFile, String iconFileNext, int normalSize, int incrementFactor, Runnable actionCallback){
+    public MouseAdapterIconLabelUpdate(JLabel label, String iconFile, String iconFileNext, int normalSize, Runnable actionCallback){
         this.label = label;
-        label.setMinimumSize(new Dimension(normalSize + incrementFactor, normalSize + incrementFactor));
+        label.setMinimumSize(new Dimension(normalSize, normalSize));
         Image img =  null;
         try {
             img = ImageIO.read(new File(iconFile));
