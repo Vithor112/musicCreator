@@ -4,6 +4,10 @@ import com.ufrgs.Music;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Player {
 
@@ -13,6 +17,10 @@ public class Player {
     private JLabel timeLabel;
 
     private Music music;
+
+    private String duration;
+
+    ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Player() {
         startLabel.addMouseListener(new MouseAdapterIconLabelUpdate(startLabel, "./icons/play.png", "./icons/pause.png", 30, this::playMusic));
@@ -24,6 +32,7 @@ public class Player {
     void playMusic() {
         if (music != null) {
             music.Pause();
+            ;
         }
         // TODO throw warning
     }
@@ -40,7 +49,26 @@ public class Player {
             durationSecs /= 60;
             minutes++;
         }
-        timeLabel.setText(" 0:00/" + minutes + ":" + String.format("%02d", (int) durationSecs));
+        duration = "/" + String.format("%02d", minutes) + ":" + String.format("%02d", (int) durationSecs);
+        timeLabel.setText(" 0:00" + duration);
+        try {
+            executorService.awaitTermination(100, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        executorService.submit(() -> {
+            while (true) {
+                long seconds = music.getTime() / 1000000000;
+                int minutesLambda = 0;
+                while (seconds >= 60) {
+                    seconds /= 60;
+                    minutesLambda++;
+                }
+                String currentTime = String.format("%02d", minutesLambda) + ":" + String.format("%02d", (int) seconds);
+                ;
+                timeLabel.setText(currentTime + duration);
+            }
+        });
     }
 
 

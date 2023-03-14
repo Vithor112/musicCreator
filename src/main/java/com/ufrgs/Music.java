@@ -12,10 +12,13 @@ import java.io.File;
 import java.io.IOException;
 
 import java.security.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 // É a música em si, seria a interface do programa com a biblioteca utilizada:
 public class Music {
@@ -24,6 +27,8 @@ public class Music {
     Player player;
 
     boolean firstTime = true;
+
+    AtomicLong nanoSecondsPlayed = new AtomicLong(0L);
 
     ExecutorService executorService = Executors.newSingleThreadExecutor();
     AtomicBoolean pause = new AtomicBoolean(false);
@@ -59,10 +64,20 @@ public class Music {
                 } catch (InvalidMidiDataException | MidiUnavailableException e) {
                     throw new RuntimeException(e);
                 }
+                long nanoStart = System.nanoTime();
+                boolean newStart = true;
+
                 while(!player.getManagedPlayer().isFinished()) {
                     if (!pause.get()) {
                         player.getManagedPlayer().resume();
+                        long nanoPlayed = System.nanoTime();
+                        if (newStart) {
+                            nanoStart = System.nanoTime() - nanoSecondsPlayed.get();
+                            newStart = false;
+                        }
+                        nanoSecondsPlayed.set(nanoPlayed - nanoStart);
                     } else {
+                        newStart = true;
                         player.getManagedPlayer().pause();
                     }
                 }
@@ -72,7 +87,7 @@ public class Music {
         }
     }
     // Diz qual tempo estamos na música;
-    public Timestamp getTime(){return null;}
+    public Long getTime(){return nanoSecondsPlayed.get();}
 
     @Override
     protected void finalize() throws Throwable {
