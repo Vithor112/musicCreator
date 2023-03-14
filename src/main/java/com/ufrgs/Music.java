@@ -33,24 +33,18 @@ public class Music {
         double[] durationsOfEachVoice = tool.getDurations();
         durationSeconds = durationsOfEachVoice[0];
     }
-
-    // Salva o output da musica no arquivo que corresponde ao caminho dado
-    public void saveMusicOutput(String pathTo){}
+    
     // Salva o arquivo MIDI que corresponde ao caminho dado
-    public void saveMusicMIDI(String pathTo){
-        try {
-            File file = new File(pathTo);
-            MidiFileManager.savePatternToMidi(pattern, file );
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    public void saveMusicMIDI(String pathTo) throws IOException {
+        File file = new File(pathTo);
+        MidiFileManager.savePatternToMidi(pattern, file );
     }
     //  Pausa a música ou a retoma;
     public void Pause(){
         if (player.getManagedPlayer().isStarted()) {
             if (player.getManagedPlayer().isPaused()) {
                 player.getManagedPlayer().resume();
-            } else {
+            } else if (!player.getManagedPlayer().isFinished()) {
                 player.getManagedPlayer().pause();
             }
         } else {
