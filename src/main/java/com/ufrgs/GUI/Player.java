@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Player {
 
@@ -18,7 +18,9 @@ public class Player {
 
     private Music music;
 
-    private String duration;
+    private AtomicReference<String> duration = new AtomicReference<>();
+
+    AtomicBoolean running = new AtomicBoolean(false);
 
     ExecutorService executorService = Executors.newSingleThreadExecutor();
 
@@ -42,6 +44,10 @@ public class Player {
     }
 
     public void setMusic(Music music) {
+        if (this.music != null) {
+            stop();
+            this.music.stop();
+        }
         this.music = music;
         double durationSecs = music.calcDuration();
         int minutes = 0;
@@ -49,15 +55,13 @@ public class Player {
             durationSecs /= 60;
             minutes++;
         }
-        duration = "/" + String.format("%02d", minutes) + ":" + String.format("%02d", (int) durationSecs);
-        timeLabel.setText(" 0:00" + duration);
-        try {
-            executorService.awaitTermination(100, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        duration.set("/" + String.format("%02d", minutes) + ":" + String.format("%02d", (int) durationSecs));
+        synchronized (timeLabel) {
+            timeLabel.setText(" 0:00" + duration.get());
         }
         executorService.submit(() -> {
-            while (true) {
+            running.set(true);
+            while (running.get()) {
                 long seconds = music.getTime() / 1000000000;
                 int minutesLambda = 0;
                 while (seconds >= 60) {
@@ -65,10 +69,15 @@ public class Player {
                     minutesLambda++;
                 }
                 String currentTime = String.format("%02d", minutesLambda) + ":" + String.format("%02d", (int) seconds);
-                ;
-                timeLabel.setText(currentTime + duration);
+                synchronized (timeLabel) {
+                    timeLabel.setText(currentTime + duration.get());
+                }
             }
         });
+    }
+
+    private void stop() {
+        running.set(false);
     }
 
 

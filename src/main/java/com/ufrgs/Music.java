@@ -52,6 +52,7 @@ public class Music {
         File file = new File(pathTo);
         MidiFileManager.savePatternToMidi(pattern, file );
     }
+
     //  Pausa a música ou a retoma;
     public void Pause(){
         if (firstTime.get()) {
