@@ -74,8 +74,16 @@ public class MainWindow {
         fc.setDialogTitle("Select folder to save music");
         int result = fc.showDialog(null, "Select");
         if (result == JFileChooser.APPROVE_OPTION) {
-            music.saveMusicMIDI(fc.getSelectedFile().getAbsolutePath());
-            // music.saveMusicOutput(fc.getSelectedFile().getAbsolutePath()); // TODO
+            try {
+                String path = fc.getSelectedFile().getAbsolutePath();
+                if (path.indexOf('.') != -1) {
+                    path = path.substring(0, path.indexOf('.'));
+                }
+                String nameMidi = path + ".midi";
+                music.saveMusicMIDI(nameMidi);
+            } catch (IOException e) {
+                // TODO
+            }
         }
 
     }
