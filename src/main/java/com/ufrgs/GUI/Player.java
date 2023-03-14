@@ -16,7 +16,7 @@ public class Player {
 
     public Player() {
         startLabel.addMouseListener(new MouseAdapterIconLabelUpdate(startLabel, "./icons/play.png", "./icons/pause.png", 30, this::playMusic));
-        timeLabel.setText(" 0:00/3:53");
+        timeLabel.setText(" 0:00/0:00");
         mainPanel.setMaximumSize(new Dimension(900, 70));
         mainPanel.setSize(900, 70);
     }
@@ -34,6 +34,13 @@ public class Player {
 
     public void setMusic(Music music) {
         this.music = music;
+        double durationSecs = music.calcDuration();
+        int minutes = 0;
+        while (durationSecs >= 60) {
+            durationSecs /= 60;
+            minutes++;
+        }
+        timeLabel.setText(" 0:00/" + minutes + ":" + String.format("%02d", (int) durationSecs));
     }
 
 
