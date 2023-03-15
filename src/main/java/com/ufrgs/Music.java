@@ -22,7 +22,7 @@ public class Music {
     Pattern pattern;
     Player player;
 
-    AtomicBoolean firstTime = new AtomicBoolean(true);
+    AtomicBoolean newMusic = new AtomicBoolean(true);
 
     AtomicBoolean running = new AtomicBoolean(true);
 
@@ -47,6 +47,16 @@ public class Music {
         return durationsOfEachVoice[0];
     }
 
+    AtomicBoolean finished = new AtomicBoolean(false);
+
+    public boolean hasMusicEnded(){
+        if (finished.get()) {
+            finished.set(false);
+            return true;
+        }
+        return false;
+    }
+
     // Salva o arquivo MIDI que corresponde ao caminho dado
     public void saveMusicMIDI(String pathTo) throws IOException {
         File file = new File(pathTo);
@@ -55,20 +65,27 @@ public class Music {
 
     //  Pausa a música ou a retoma;
     public void Pause(){
-        if (firstTime.get()) {
-            firstTime.set(false);
+        if (newMusic.get()) {
+            pause.set(false);
+            newMusic.set(false);
             executorService.submit(() -> {
                 try {
                     player.getManagedPlayer().start(player.getSequence(pattern));
                 } catch (InvalidMidiDataException | MidiUnavailableException e) {
                     throw new RuntimeException(e);
                 }
+                nanoSecondsPlayed.set(0L);
                 long nanoStart = System.nanoTime();
                 boolean newStart = true;
 
-                while(!player.getManagedPlayer().isFinished() && running.get()) {
+                while (!player.getManagedPlayer().isFinished() && running.get()) {
                     if (!pause.get()) {
-                        player.getManagedPlayer().resume();
+                        try {
+                            player.getManagedPlayer().resume();
+                        } catch (IllegalStateException e) {
+                            newMusic.set(true);
+                            finished.set(true);
+                        }
                         long nanoPlayed = System.nanoTime();
                         if (newStart) {
                             nanoStart = System.nanoTime() - nanoSecondsPlayed.get();
@@ -80,7 +97,7 @@ public class Music {
                         player.getManagedPlayer().pause();
                     }
                 }
-                firstTime.set(true);
+                if (!player.getManagedPlayer().isFinished()) player.getManagedPlayer().pause();
             });
         } else {
             pause.set(!pause.get());

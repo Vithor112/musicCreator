@@ -22,10 +22,13 @@ public class Player {
 
     AtomicBoolean running = new AtomicBoolean(false);
 
+    MouseAdapterIconLabelUpdate labelListener;
+
     ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public Player() {
-        startLabel.addMouseListener(new MouseAdapterIconLabelUpdate(startLabel, "./icons/play.png", "./icons/pause.png", 30, this::playMusic));
+        labelListener = new MouseAdapterIconLabelUpdate(startLabel, "./icons/play.png", "./icons/pause.png", 30, this::playMusic);
+        startLabel.addMouseListener(labelListener);
         timeLabel.setText(" 0:00/0:00");
         mainPanel.setMaximumSize(new Dimension(900, 70));
         mainPanel.setSize(900, 70);
@@ -34,7 +37,6 @@ public class Player {
     void playMusic() {
         if (music != null) {
             music.Pause();
-            ;
         }
         // TODO throw warning
     }
@@ -49,6 +51,7 @@ public class Player {
             this.music.stop();
         }
         this.music = music;
+        labelListener.changeToDefault();
         double durationSecs = music.calcDuration();
         int minutes = 0;
         while (durationSecs >= 60) {
@@ -62,6 +65,11 @@ public class Player {
         executorService.submit(() -> {
             running.set(true);
             while (running.get()) {
+                if (music.hasMusicEnded()) {
+                    synchronized (labelListener) {
+                        labelListener.changeToDefault();
+                    }
+                }
                 long seconds = music.getTime() / 1000000000;
                 int minutesLambda = 0;
                 while (seconds >= 60) {

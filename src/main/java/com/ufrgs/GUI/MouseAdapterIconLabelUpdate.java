@@ -35,6 +35,11 @@ public class MouseAdapterIconLabelUpdate extends MouseAdapter {
         this.nextIcon = new ImageIcon(img.getScaledInstance(normalSize, normalSize, Image.SCALE_SMOOTH));
         this.actionCallback = actionCallback;
     }
+
+    public void changeToDefault(){
+        label.setIcon(icon);
+        next = true;
+    }
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         if (next) {
