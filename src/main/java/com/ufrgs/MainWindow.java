@@ -91,8 +91,9 @@ public class MainWindow {
     void initializeMapping() {
         try {
             map = new Mapping();
-            setColumn(charsTable, "Symbols", map.getChars());
-            setColumn(patternsTable, "Patterns", map.getCommands());
+
+            setColumn(charsTable, "Symbols", map.getDisplayChars());
+            setColumn(patternsTable, "Patterns", map.getDisplayActions());
         } catch (IOException e) {
             // TODO
             throw new RuntimeException(e);

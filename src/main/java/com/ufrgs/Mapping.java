@@ -1,10 +1,7 @@
 package com.ufrgs;
 
 import java.io.FileNotFoundException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.io.*;
 
 public class Mapping {
@@ -12,11 +9,11 @@ public class Mapping {
     private static final String MAP_FILE = "./src/main/mapping.txt";
     private final HashMap<String, String> mapCharsToJFugueCommand = new HashMap<>();
 
-    private final HashMap<String, String> mapCharsToDescription = new HashMap<>();
+    private final LinkedHashMap<String, String> mapCharsToDescription = new LinkedHashMap<>();
 
     public Mapping() throws IOException {
         initializeFromFile();
-        commandToAction();
+        charsToAction();
     }
 
     // Retorna uma lista com as Strings que mapeiam pra um comando no map
@@ -71,7 +68,7 @@ public class Mapping {
 
     }
 
-    public void commandToAction(){
+    public void charsToAction(){
         mapCharsToDescription.put("A","Nota Lá");
         mapCharsToDescription.put("B","Nota Si");
         mapCharsToDescription.put("C","Nota Dó");
@@ -83,18 +80,22 @@ public class Mapping {
         mapCharsToDescription.put("' ' (Espaço) ","Dobra o volume");
         mapCharsToDescription.put("?","Aumenta uma oitava");
 
-        mapCharsToDescription.put("!", "Troca instrumento para Agogo");
-        mapCharsToDescription.put("O/o/I/i", "Troca instrumento para Harpsichord");
-        mapCharsToDescription.put("\\n", "Troca instrumento para Tubular Bells");
-        mapCharsToDescription.put(";", "Troca instrumento para Pan Flute");
-        mapCharsToDescription.put(",", "Troca instrumento para Church Organ");
-        mapCharsToDescription.put("Dígito", "Troca instrumento para o instrumento MIDI de valor = Atual + Dígito");
+        mapCharsToDescription.put("!", "Instrumento Agogo");
+        mapCharsToDescription.put("O/o/I/i", "Instrumento Harpsichord");
+        mapCharsToDescription.put("\\n", "Instrumento Tubular Bells");
+        mapCharsToDescription.put(";", "Instrumento Pan Flute");
+        mapCharsToDescription.put(",", "Instrumento Church Organ");
+        mapCharsToDescription.put("Dígito", "Instrumento += [digito]");
 
-        mapCharsToDescription.put("Qualquer outro caracter", "Repete nota, se o anterior era nota, senão, silêncio");
+        mapCharsToDescription.put("Else", "Repete nota ou pausa");
 
 
 
 
     }
-
+    public Set<String> getDisplayChars(){ return mapCharsToDescription.keySet();
+    }
+    public Collection<String> getDisplayActions(){
+        return mapCharsToDescription.values();
+    }
 }
