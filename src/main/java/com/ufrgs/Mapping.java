@@ -19,7 +19,7 @@ public class Mapping {
         commandToAction();
     }
 
-    // Retorna uma lista com as Strings que mapeaiam pra um comando no map
+    // Retorna uma lista com as Strings que mapeiam pra um comando no map
     public Set<String> getChars(){
         return mapCharsToJFugueCommand.keySet();
     }
@@ -61,7 +61,7 @@ public class Mapping {
                 char charat;
 
                 //percorre todos os caracteres até G mapeando eles com o número ASCII, para o código da função
-                for (int x=initial;x<end;x++){
+                for (int x=initial;x<=end;x++){
                     mapCharsToJFugueCommand.put(String.valueOf((char) x), map[1]+String.valueOf((char) x));
                 }
             }else{
