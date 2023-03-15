@@ -20,6 +20,8 @@ public class Player {
 
     private AtomicReference<String> duration = new AtomicReference<>();
 
+    int durationTotal;
+
     AtomicBoolean running = new AtomicBoolean(false);
 
     MouseAdapterIconLabelUpdate labelListener;
@@ -53,6 +55,10 @@ public class Player {
         this.music = music;
         labelListener.changeToDefault();
         double durationSecs = music.calcDuration();
+        durationTotal = (int) durationSecs;
+        progressBar.setMinimum(0);
+        progressBar.setValue(0);
+        progressBar.setMaximum(durationTotal);
         int minutes = 0;
         while (durationSecs >= 60) {
             durationSecs /= 60;
@@ -71,6 +77,7 @@ public class Player {
                     }
                 }
                 long seconds = music.getTime() / 1000000000;
+                progressBar.setValue((int) seconds);
                 int minutesLambda = 0;
                 while (seconds >= 60) {
                     seconds /= 60;
