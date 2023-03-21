@@ -18,6 +18,7 @@ public class MusicFactory {
     public static Pattern createPattern(String text, Mapping map){
         String command;
         char lastRead='a';
+        char lastType='X';
 
         Pattern pattern = new Pattern();
         pattern.add(":CON(7"+String.valueOf(volume)+")"); //https://fmslogo.sourceforge.io/manual/midi-table.html
@@ -25,8 +26,9 @@ public class MusicFactory {
         for(char c : text.toCharArray()) {
             command = map.getCommand(String.valueOf(c));
             String sel[];
-            if (!command.equals("")){
+            if (!command.equals("")){//se for caracter definido no arquivo
                 sel = command.split(":");
+                lastType =sel[0].charAt(0);
                 if (sel[0].equals("N")){
                     //adiciona nota com a oitava especificada
                     pattern.add(sel[1]+octave);
@@ -45,15 +47,16 @@ public class MusicFactory {
                     setVolume(volume*2);
                     pattern.add(":CON(7"+String.valueOf(volume)+")");
                 }
-            } //se for caracter definido
-            else{//se for qualquer caracter não definido ou a-g
-                if((int)lastRead>=65 && (int)lastRead<=71){//se ultimo caracter foi nota, coloca ele de novo
+            }
+            else{//se for qualquer caracter não definido pelo arquivo ou a-g
+                if(lastType == 'N'){//(int)lastRead>=65 && (int)lastRead<=71){//se ultimo caracter foi nota, coloca ele de novo
                     command = map.getCommand(String.valueOf(lastRead));
                     sel = command.split(":");
                     pattern.add(sel[1]+octave);
                 }else{
-                    pattern.add("r");
+                    pattern.add("Rw");
                 }
+                lastType ='X';
             }
             lastRead=c;
         }
