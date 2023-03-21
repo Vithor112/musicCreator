@@ -8,7 +8,7 @@ import java.util.List;
 // Classe que cuida do processo da geração da música através de um texto;
 public class MusicFactory {
     private static int instrument=0; //MIDI instrument https://fmslogo.sourceforge.io/manual/midi-instrument.html
-    private static  int volume =40; //volume from 0 to 127
+    private static  int volume =20; //volume from 0 to 127
     private static int octave = 5; //default octave
 
     public MusicFactory(){
@@ -47,11 +47,12 @@ public class MusicFactory {
                 }
             } //se for caracter definido
             else{//se for qualquer caracter não definido ou a-g
-                // TODO FIXXXXXXXXX VER COM O PIMENTA o caso Ca*
                 if((int)lastRead>=65 && (int)lastRead<=71){//se ultimo caracter foi nota, coloca ele de novo
                     command = map.getCommand(String.valueOf(lastRead));
                     sel = command.split(":");
                     pattern.add(sel[1]+octave);
+                }else{
+                    pattern.add("r");
                 }
             }
             lastRead=c;
@@ -66,7 +67,7 @@ public class MusicFactory {
     }
 
     public static void setVolume(int volume) {
-        if(volume>127){ // TODO FIXXXXX VER COM O PIMENTA
+        if(volume>127){
             volume = 40;
         }
 
@@ -74,7 +75,7 @@ public class MusicFactory {
     }
 
     public static void setOctave(int octave) {
-        if (octave>10 || octave<1){ // TODO FIXXXXX VER COM O PIMENTA
+        if (octave>10 || octave<1){
             octave = 5;
         }
         MusicFactory.octave = octave;
