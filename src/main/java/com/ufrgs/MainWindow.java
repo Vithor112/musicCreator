@@ -79,7 +79,7 @@ public class MainWindow {
                 if (path.indexOf('.') != -1) {
                     path = path.substring(0, path.indexOf('.'));
                 }
-                String nameMidi = path + ".midi";
+                String nameMidi = path + "song.midi";
                 music.saveMusicMIDI(nameMidi);
             } catch (IOException e) {
                 // TODO

@@ -49,7 +49,7 @@ public class MusicFactory {
                 }
             }
             else{//se for qualquer caracter não definido pelo arquivo ou a-g
-                if(lastType == 'N'){//(int)lastRead>=65 && (int)lastRead<=71){//se ultimo caracter foi nota, coloca ele de novo
+                if(lastType == 'N'){//se ultimo caracter foi nota, coloca ele de novo
                     command = map.getCommand(String.valueOf(lastRead));
                     sel = command.split(":");
                     pattern.add(sel[1]+octave);
