@@ -31,6 +31,8 @@ public class Music {
     ExecutorService executorService = Executors.newSingleThreadExecutor();
     AtomicBoolean pause = new AtomicBoolean(false);
 
+    AtomicBoolean finished = new AtomicBoolean(false);
+
     //  cria a música com os padrões dados;
     public Music(Pattern p){
         pattern = p;
@@ -47,7 +49,6 @@ public class Music {
         return durationsOfEachVoice[0];
     }
 
-    AtomicBoolean finished = new AtomicBoolean(false);
 
     public boolean hasMusicEnded(){
         if (finished.get()) {

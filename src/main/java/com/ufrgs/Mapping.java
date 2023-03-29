@@ -33,7 +33,7 @@ public class Mapping {
         }
         return "";
     }
-
+    // Inicializa do arquivo para o hashmap
     public void initializeFromFile() throws IOException {
         File file = new File(MAP_FILE);
         BufferedReader br;
@@ -67,7 +67,7 @@ public class Mapping {
         }
 
     }
-
+    // Comandos a serem exibidos na tela, hardCoded
     public void charsToAction(){
         mapCharsToDescription.put("A","Nota Lá");
         mapCharsToDescription.put("B","Nota Si");
