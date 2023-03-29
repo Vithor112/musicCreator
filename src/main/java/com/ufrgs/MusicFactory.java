@@ -22,7 +22,6 @@ public class MusicFactory {
 
         Pattern pattern = new Pattern();
         pattern.add(":CON(7,"+String.valueOf(volume)+")"); //https://fmslogo.sourceforge.io/manual/midi-table.html
-        //pattern.add(":CE(935,"+String.valueOf(volume)+")");
         for(char c : text.toCharArray()) {
             command = map.getCommand(String.valueOf(c));
             String sel[];
