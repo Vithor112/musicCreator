@@ -70,16 +70,16 @@ public class MainWindow {
     void saveMusic() {
         if (music == null) throw new RuntimeException("Music was not generated"); // TODO
         JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fc.setDialogTitle("Select folder to save music");
-        int result = fc.showDialog(null, "Select");
+        int result = fc.showSaveDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
             try {
                 String path = fc.getSelectedFile().getAbsolutePath();
                 if (path.indexOf('.') != -1) {
                     path = path.substring(0, path.indexOf('.'));
                 }
-                String nameMidi = path + "song.midi";
+                String nameMidi = path + ".midi";
                 music.saveMusicMIDI(nameMidi);
             } catch (IOException e) {
                 // TODO
