@@ -68,7 +68,9 @@ public class MainWindow {
 
     // Callback  que ocorre quando o usuário clica no botão para salvar a música, deve chamar o método save da classe Music;
     void saveMusic() {
-        if (music == null) throw new RuntimeException("Music was not generated"); // TODO
+        if (music == null) {
+            JOptionPane.showMessageDialog(mainPanel, "Music was not generated yet!");
+        }
         JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fc.setDialogTitle("Select folder to save music");
@@ -82,7 +84,8 @@ public class MainWindow {
                 String nameMidi = path + ".midi";
                 music.saveMusicMIDI(nameMidi);
             } catch (IOException e) {
-                // TODO
+                JOptionPane.showMessageDialog(mainPanel, "Error while saving Music, consult a developer");
+                System.err.println(e.getMessage());
             }
         }
 
@@ -95,8 +98,8 @@ public class MainWindow {
             setColumn(charsTable, "Symbols", map.getDisplayChars());
             setColumn(patternsTable, "Patterns", map.getDisplayActions());
         } catch (IOException e) {
-            // TODO
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(mainPanel, "Error while initializing map, consult a developer");
+            System.err.println(e.getMessage());
         }
     }
 

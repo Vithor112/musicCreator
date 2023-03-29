@@ -40,7 +40,7 @@ public class Player {
         if (music != null) {
             music.Pause();
         }
-        // TODO throw warning
+        JOptionPane.showMessageDialog(null, "Music was not generated yet!");
     }
 
     public JPanel getPlayerPanel() {
