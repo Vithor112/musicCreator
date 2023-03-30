@@ -39,11 +39,11 @@ public class MusicFactory {
                     pattern.setInstrument(instrument+Integer.valueOf(sel[1]));
                 }else if(sel[0].equals("O")){
                     //todas notas depois estão em uma oitava diferente
-                    setOctave(octave+1);
+                    setOctave(octave+Integer.valueOf(sel[1]));
                 }
-                else{
+                else if(sel[0].equals("V")){
                     // todas notas depois estão em volume diferente
-                    setVolume(volume*2);
+                    setVolume(volume*Integer.valueOf(sel[1]));
                     pattern.add(":CE(7,"+String.valueOf(volume)+")");
                 }
             }
